@@ -1,10 +1,22 @@
+"use client";
 import Image from "next/image";
 import { FaMapMarkerAlt, FaPhoneAlt, FaDollarSign } from "react-icons/fa";
 import Farm from "@/components/images/farm.jpg";
 import Farmtool from "@/components/images/farmtool.jpg";
 import Farmtool1 from "@/components/images/farmtool1.jpg";
+import React, { useState } from "react";
 
 export default function FundCard() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const cards = [
     {
       name: "Abdi Ali Hassan",
@@ -87,7 +99,10 @@ export default function FundCard() {
                       </button>
                     </div>
                   </div>
-                  <button className="bg-yellow-500 text-white py-2 px-6 rounded-lg hover:bg-yellow-600 active:scale-95 transition-all duration-200">
+                  <button
+                    className="bg-yellow-500 text-white py-2 px-6 rounded-lg hover:bg-yellow-600 active:scale-95 transition-all duration-200"
+                    onClick={handleOpenModal}
+                  >
                     Go Fund
                   </button>
                 </div>
@@ -96,6 +111,63 @@ export default function FundCard() {
           </div>
         ))}
       </div>
+
+      {/* Modal for payment form */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-bold mb-4">Payment Information</h2>
+            {/* Payment form fields */}
+            <form>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Card Number
+                </label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-4"
+                  placeholder="1234 5678 9012 3456"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Expiration Date
+                </label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-4"
+                  placeholder="MM/YY"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  CVV
+                </label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-4"
+                  placeholder="123"
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  className="bg-red-500 text-white py-2 px-4 rounded-md mr-2"
+                  onClick={handleCloseModal}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-green-500 text-white py-2 px-4 rounded-md"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
